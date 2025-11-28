@@ -1,11 +1,11 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-// import { User } from "../entities/User";
-// import { Product } from "../entities/Product";
-// import { Cart } from "../entities/Cart";
-// import { CartItem } from "../entities/CartItem";
-// import { Order } from "../entities/Order";
-// import { OrderItem } from "../entities/OrderItem";
+import { User } from "../entities/User";
+import { Product } from "../entities/Product";
+import { Cart } from "../entities/Cart";
+import { CartItem } from "../entities/CartItem";
+import { Order } from "../entities/Order";
+import { OrderItem } from "../entities/OrderItem";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -13,10 +13,10 @@ export const AppDataSource = new DataSource({
   port: 5432,
   username: "postgres", 
   password: "password",
-  database: "tshop",
+  database: "tsshop",
   synchronize: true, 
   logging: true,
-  // entities: [User, Product, Cart, CartItem, Order, OrderItem],
+  entities: [User, Product, Cart, CartItem, Order, OrderItem],
   migrations: [],
   subscribers: [],
 });
