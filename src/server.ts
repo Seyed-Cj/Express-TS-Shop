@@ -1,6 +1,33 @@
 import app from './app';
 import config from './config/config';
+import { AppDataSource } from "./config/data-source";
+import { User } from "./entities/User";
 
-app.listen(config.port, () => {
-  console.log(`Server running on http://localhost:${config.port}`);
-});
+// test creating a user >>
+// async function createUser() {
+//   const userRepo = AppDataSource.getRepository(User);
+
+//   const user = userRepo.create({
+//     email: "test@example.com",
+//     password: "123456",
+//   });
+
+//   await userRepo.save(user);
+//   console.log("User created:", user);
+// }
+
+// AppDataSource.initialize()
+//   .then(createUser)
+//   .catch(console.error);
+
+AppDataSource.initialize()
+  .then(() => {
+    console.log("Database connected!");
+
+    app.listen(config.port, () => {
+      console.log(`Server running on http://localhost:${config.port}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Error connecting to database:", err);
+  });
