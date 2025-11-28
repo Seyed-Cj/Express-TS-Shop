@@ -1,5 +1,4 @@
 import express from 'express';
-import { errorHandler } from './middlewares/errorHandler';
 import logger from './middlewares/logger.middleware';
 import morgan from 'morgan';
 
@@ -14,7 +13,6 @@ export const morganStream = {
 
 app.use(express.json());
 
-app.use(errorHandler);
 app.use(morgan("combined", { stream: morganStream }));
 
 export default app;
