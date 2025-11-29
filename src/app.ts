@@ -1,6 +1,7 @@
 import express from 'express';
 import logger from './middlewares/logger.middleware';
 import morgan from 'morgan';
+import authRoutes from "./routes/auth.routes";
 
 const app = express();
 
@@ -14,5 +15,7 @@ export const morganStream = {
 app.use(express.json());
 
 app.use(morgan("combined", { stream: morganStream }));
+
+app.use("/api/auth", authRoutes);
 
 export default app;
