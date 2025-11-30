@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { AppDataSource } from '../config/data-source';
 import { User } from '../entities/User';
-import { comparePassword, hashPassword, signAccessToken } from '../utils/auth';
+import { comparePassword, hashPassword, signAccessToken, signRefreshToken } from '../utils/auth';
 import jwt from 'jsonwebtoken';
 
 const userRepo = AppDataSource.getRepository(User);
@@ -22,7 +22,7 @@ export const register = async (req: Request, res: Response) => {
   await userRepo.save(user);
 
   const accessToken = signAccessToken({ id: user.id, role: user.role });
-  const refreshToken = signAccessToken({ id: user.id });
+  const refreshToken = signRefreshToken({ id: user.id });
   user.refreshToken = refreshToken;
   await userRepo.save(user);
 
@@ -39,7 +39,7 @@ export const login = async (req: Request, res: Response) => {
   if (!isValid) return res.status(401).json({ message: 'Invalid credentials' });
 
   const accessToken = signAccessToken({ id: user.id, role: user.role });
-  const refreshToken = signAccessToken({ id: user.id });
+  const refreshToken = signRefreshToken({ id: user.id });
   user.refreshToken = refreshToken;
   await userRepo.save(user);
 
