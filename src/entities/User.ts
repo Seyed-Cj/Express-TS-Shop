@@ -23,6 +23,6 @@ export class User {
   @JoinColumn()
   cart!: Cart;
 
-  @Column({ type: "varchar", length: 500, nullable: true })
+  @Column({ type: 'varchar', length: 500, nullable: true })
   refreshToken!: string | null;
 }

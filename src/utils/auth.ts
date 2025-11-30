@@ -10,5 +10,5 @@ export const comparePassword = (password: string, hash: string) => bcrypt.compar
 export const signAccessToken = (payload: object) =>
   jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '15min' });
 
-export const signRefreshToken = (payload: object) => 
+export const signRefreshToken = (payload: object) =>
   jwt.sign(payload, process.env.JWT_REFRESH_SECRET as string, { expiresIn: '7d' });

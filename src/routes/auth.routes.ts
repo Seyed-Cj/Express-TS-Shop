@@ -11,9 +11,9 @@ router.post('/register', register);
 router.post('/login', login);
 
 // refresh token
-router.post("/refresh", refreshToken);
+router.post('/refresh', refreshToken);
 
 // logout
-router.post("/logout", authMiddleware, logout);
+router.post('/logout', authMiddleware, logout);
 
 export default router;

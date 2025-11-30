@@ -49,14 +49,10 @@ export const login = async (req: Request, res: Response) => {
 export const refreshToken = async (req: Request, res: Response) => {
   const { refreshToken } = req.body;
 
-  if (!refreshToken)
-    return res.status(401).json({ message: 'refresh token required .' });
+  if (!refreshToken) return res.status(401).json({ message: 'refresh token required .' });
 
   try {
-    const decoded = jwt.verify(
-      refreshToken,
-      process.env.JWT_REFRESH_SECRET as string
-    ) as any;
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET as string) as any;
 
     const user = await userRepo.findOne({ where: { id: decoded.id } });
     if (!user || user.refreshToken !== refreshToken)
@@ -64,14 +60,14 @@ export const refreshToken = async (req: Request, res: Response) => {
 
     const newAccesssToken = signAccessToken({
       id: user.id,
-      role: user.role
+      role: user.role,
     });
 
-    return res.json({ accessToken: newAccesssToken })
+    return res.json({ accessToken: newAccesssToken });
   } catch {
     return res.status(401).json({ message: 'Refresh token expired or invalid .' });
   }
-}
+};
 
 export const logout = async (req: Request, res: Response) => {
   if (!req.user) {
