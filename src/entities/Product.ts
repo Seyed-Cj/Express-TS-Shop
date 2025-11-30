@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { CartItem } from './CartItem';
 import { OrderItem } from './OrderItem';
+import { Category } from './Category';
 
 @Entity()
 export class Product {
@@ -10,15 +11,33 @@ export class Product {
   @Column()
   title!: string;
 
+  @Column('text', { nullable: true })
+  description?: string;
+
   @Column('float')
   price!: number;
 
-  @Column()
+  @Column('int', { default: 0 })
   stock!: number;
 
-  @OneToMany(() => CartItem, (cartItem: CartItem) => cartItem.product)
+  @Column({ nullable: true })
+  imageUrl?: string;
+
+  @ManyToOne(() => Category, (category) => category.products)
+  category?: Category;
+
+  @OneToMany(() => CartItem, (cartItem) => cartItem.product)
   cartItems!: CartItem[];
 
-  @OneToMany(() => OrderItem, (orderItem: OrderItem) => orderItem.product)
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.product)
   orderItems!: OrderItem[];
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
+
+  @Column({ default: true })
+  isActive!: boolean;
 }
