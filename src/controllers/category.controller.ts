@@ -1,7 +1,7 @@
-import z from "zod";
-import { Category } from "../entities/Category";
-import { AppDataSource } from "../config/data-source";
-import { Request, Response } from "express";
+import z from 'zod';
+import { Category } from '../entities/Category';
+import { AppDataSource } from '../config/data-source';
+import { Request, Response } from 'express';
 
 const createCategorySchema = z.object({
   name: z.string().min(2).max(100),
