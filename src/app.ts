@@ -3,6 +3,7 @@ import logger from './middleware/logger.middleware';
 import morgan from 'morgan';
 import authRoutes from './routes/auth.routes';
 import productRoutes from './routes/product.routes';
+import categoryRoutes from './routes/category.routes';
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.use(morgan('combined', { stream: morganStream }));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/categories', categoryRoutes);
 
 export default app;

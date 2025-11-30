@@ -13,7 +13,7 @@ const createProductSchema = z.object({
   price: z.coerce.number().min(0),
   stock: z.coerce.number().int().min(0).default(0),
   imageUrl: z.string().url().optional(),
-  // categoryId: z.string().uuid().optional(),
+  categoryId: z.string().uuid().optional(),
 });
 
 const updateProductSchema = z.object({
@@ -23,7 +23,7 @@ const updateProductSchema = z.object({
   stock: z.coerce.number().int().min(0).optional(),
   imageUrl: z.string().url().optional(),
   isActive: z.boolean().optional(),
-  // categoryId: z.string().uuid().optional(),
+  categoryId: z.string().uuid().optional(),
 });
 
 export const getAllProducts = async (req: Request, res: Response) => {
@@ -84,13 +84,13 @@ export const createProduct = async (req: Request, res: Response) => {
     if (!parse.success)
       return res.status(400).json({ message: 'Validation failed', errors: parse.error.issues });
 
-    const { title, description, price, stock, imageUrl } = parse.data;
+    const { title, description, price, stock, imageUrl, categoryId } = parse.data;
 
-    // let category: Category | null = null;
-    // if (categoryId) {
-    //   category = await categoryRepo.findOne({ where: { id: categoryId } });
-    //   if (!category) return res.status(400).json({ message: 'Category not found' });
-    // }
+    let category: Category | null = null;
+    if (categoryId) {
+      category = await categoryRepo.findOne({ where: { id: categoryId } });
+      if (!category) return res.status(400).json({ message: 'Category not found' });
+    }
 
     const product = productRepo.create({
       title,
@@ -98,7 +98,7 @@ export const createProduct = async (req: Request, res: Response) => {
       price,
       stock,
       imageUrl,
-      // category: category ?? undefined,
+      category: category ?? undefined,
     } as Partial<Product>);
 
     await productRepo.save(product);
@@ -110,36 +110,36 @@ export const createProduct = async (req: Request, res: Response) => {
 };
 
 export const updateProduct = async (req: Request, res: Response) => {
-  // try {
-  //   const parse = updateProductSchema.safeParse(req.body);
-  //   if (!parse.success)
-  //     return res.status(400).json({ message: 'Validation failed', errors: parse.error.issues });
+  try {
+    const parse = updateProductSchema.safeParse(req.body);
+    if (!parse.success)
+      return res.status(400).json({ message: 'Validation failed', errors: parse.error.issues });
 
-  //   const product = await productRepo.findOne({
-  //     where: { id: req.params.id },
-  //     relations: ['category'],
-  //   });
-  //   if (!product) return res.status(404).json({ message: 'Product not found' });
+    const product = await productRepo.findOne({
+      where: { id: req.params.id },
+      relations: ['category'],
+    });
+    if (!product) return res.status(404).json({ message: 'Product not found' });
 
-  //   const { categoryId, ...rest } = parse.data;
+    const { categoryId, ...rest } = parse.data;
 
-  //   if (categoryId) {
-  //     const category = await categoryRepo.findOne({ where: { id: categoryId } });
-  //     if (!category) return res.status(400).json({ message: 'Category not found' });
-  //     product.category = category;
-  //   }
+    if (categoryId) {
+      const category = await categoryRepo.findOne({ where: { id: categoryId } });
+      if (!category) return res.status(400).json({ message: 'Category not found' });
+      product.category = category;
+    }
 
-  //   const allowed = ['title', 'description', 'price', 'stock', 'imageUrl', 'isActive'] as const;
-  //   (allowed as readonly string[]).forEach((k) => {
-  //     if ((rest as any)[k] !== undefined) (product as any)[k] = (rest as any)[k];
-  //   });
+    const allowed = ['title', 'description', 'price', 'stock', 'imageUrl', 'isActive'] as const;
+    (allowed as readonly string[]).forEach((k) => {
+      if ((rest as any)[k] !== undefined) (product as any)[k] = (rest as any)[k];
+    });
 
-  //   await productRepo.save(product);
-  //   return res.json(product);
-  // } catch (err) {
-  //   console.error('updateProduct error:', err);
-  //   return res.status(500).json({ message: 'Server error' });
-  // }
+    await productRepo.save(product);
+    return res.json(product);
+  } catch (err) {
+    console.error('updateProduct error:', err);
+    return res.status(500).json({ message: 'Server error' });
+  }
 };
 
 export const deleteProduct = async (req: Request, res: Response) => {
