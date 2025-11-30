@@ -74,13 +74,24 @@ export const refreshToken = async (req: Request, res: Response) => {
 }
 
 export const logout = async (req: Request, res: Response) => {
+  if (!req.user) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
   const userId = req.user.id;
 
-  const user = await userRepo.findOne({ where: { id: userId } });
-  if (!user) return res.sendStatus(204);
+  try {
+    const user = await userRepo.findOne({ where: { id: userId } });
 
-  user.refreshToken = null;
-  await userRepo.save(user);
+    if (user) {
+      user.refreshToken = null;
+      await userRepo.save(user);
+    }
 
-  return res.json({ message: "Logged out" });
+    res.clearCookie('refreshToken', { httpOnly: true, secure: true, sameSite: 'strict' });
+
+    return res.json({ message: 'Logged out successfully' });
+  } catch (err) {
+    return res.status(500).json({ message: 'Server error', error: err });
+  }
 };
