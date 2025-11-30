@@ -1,16 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { CartItem } from "./CartItem";
-import { OrderItem } from "./OrderItem";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { CartItem } from './CartItem';
+import { OrderItem } from './OrderItem';
 
 @Entity()
 export class Product {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column()
   title!: string;
 
-  @Column("float")
+  @Column('float')
   price!: number;
 
   @Column()

@@ -1,10 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from "typeorm";
-import { Order } from "./Order";
-import { Cart } from "./Cart";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import { Order } from './Order';
+import { Cart } from './Cart';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column({ unique: true })
@@ -13,7 +13,7 @@ export class User {
   @Column()
   password!: string;
 
-  @Column({ default: "customer" })
+  @Column({ default: 'customer' })
   role!: string;
 
   @OneToMany(() => Order, (order: Order) => order.user)

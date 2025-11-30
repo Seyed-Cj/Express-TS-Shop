@@ -1,21 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { Order } from "./Order";
-import { Product } from "./Product";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Order } from './Order';
+import { Product } from './Product';
 
 @Entity()
 export class OrderItem {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToOne(() => Order, order => order.items, { onDelete: "CASCADE" })
+  @ManyToOne(() => Order, (order) => order.items, { onDelete: 'CASCADE' })
   order!: Order;
 
-  @ManyToOne(() => Product, product => product.orderItems)
+  @ManyToOne(() => Product, (product) => product.orderItems)
   product!: Product;
 
   @Column()
   quantity!: number;
 
-  @Column("float")
+  @Column('float')
   price!: number;
 }

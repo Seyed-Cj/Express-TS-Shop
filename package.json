@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev": "nodemon --watch src --ext ts --exec ts-node src/server.ts",
+    "dev": "nodemon --watch src --ext ts --exec ts-node -P tsconfig.json --files src/server.ts",
     "lint": "eslint 'src/**/*.ts'"
   },
   "keywords": [],

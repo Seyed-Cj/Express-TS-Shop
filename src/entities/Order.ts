@@ -1,19 +1,26 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn } from "typeorm";
-import { User } from "./User";
-import { OrderItem } from "./OrderItem";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  CreateDateColumn,
+} from 'typeorm';
+import { User } from './User';
+import { OrderItem } from './OrderItem';
 
 @Entity()
 export class Order {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToOne(() => User, user => user.orders)
+  @ManyToOne(() => User, (user) => user.orders)
   user!: User;
 
-  @Column("float")
+  @Column('float')
   total!: number;
 
-  @Column({ default: "pending" })
+  @Column({ default: 'pending' })
   status!: string;
 
   @OneToMany(() => OrderItem, (orderItem: OrderItem) => orderItem.order, { cascade: true })
