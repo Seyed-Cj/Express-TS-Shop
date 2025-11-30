@@ -1,8 +1,8 @@
 {
-  "name": "express-ts",
+  "name": "express-ts-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
@@ -10,8 +10,8 @@
     "lint": "eslint 'src/**/*.ts'"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "SeyedCj",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -22,7 +22,8 @@
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.27",
-    "winston": "^3.18.3"
+    "winston": "^3.18.3",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
