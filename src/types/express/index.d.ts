@@ -1,7 +1,9 @@
-import { User } from '../../entities/User';
+import { User } from "../entities/User";
 
-declare module 'express-serve-static-core' {
-  interface Request {
-    user?: Partial<User>;
+declare global {
+  namespace Express {
+    interface Request {
+      user?: Partial<User>;
+    }
   }
 }

@@ -22,4 +22,7 @@ export class User {
   @OneToOne(() => Cart, (cart: Cart) => cart.user)
   @JoinColumn()
   cart!: Cart;
+
+  @Column({ type: "varchar", length: 500, nullable: true })
+  refreshToken!: string | null;
 }
