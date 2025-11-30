@@ -20,9 +20,6 @@ import { User } from './entities/User';
 //   .then(createUser)
 //   .catch(console.error);
 
-import testRoutes from './routes/test.routes';
-app.use('/api/test', testRoutes);
-
 AppDataSource.initialize()
   .then(() => {
     console.log('Database connected!');

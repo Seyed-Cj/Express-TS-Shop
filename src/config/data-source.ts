@@ -6,6 +6,7 @@ import { Cart } from '../entities/Cart';
 import { CartItem } from '../entities/CartItem';
 import { Order } from '../entities/Order';
 import { OrderItem } from '../entities/OrderItem';
+import { Category } from '../entities/Category';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -16,7 +17,7 @@ export const AppDataSource = new DataSource({
   database: 'tsshop',
   synchronize: true,
   logging: true,
-  entities: [User, Product, Cart, CartItem, Order, OrderItem],
+  entities: [User, Product, Cart, CartItem, Order, OrderItem, Category],
   migrations: [],
   subscribers: [],
 });
