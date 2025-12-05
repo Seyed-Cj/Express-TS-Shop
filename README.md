@@ -1,6 +1,6 @@
-# Express + TypeScript
+# Shop Api
 
-A minimal Express setup prepared for TypeScript development.
+shop api with ts and express
 
 ## Usage
 
@@ -25,6 +25,8 @@ Create `.env` and define variables like:
 ```
 PORT=3000
 NODE_ENV=development
+JWT_SECRET=your secret
+JWT_REFRESH_SECRET=your secret
 ```
 
 ## Purpose
